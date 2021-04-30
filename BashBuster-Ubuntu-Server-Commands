@@ -1,0 +1,72 @@
+##This Document contains every command used to setup my Ubuntu server for BashBuster.org
+
+## Installs Docker program to server
+apt-get install docker-ce docker-ce-cli containerd.io
+
+#Setting up containers
+  #Updates Ubuntu server
+  sudo apt-get update
+
+  #Creates ubuntu docker container with specific ssh port at 32768, runs it automatically and names it level1
+  docker run -t -d -p 32768:22 --name LEVEL1 ubuntu
+
+  #Enters current session into the docker container for editing using bash
+  docker exec -it LEVEL1 /bin/bash
+
+  #Adds a new user called "Username" then prompts for a password for that user
+  Adduser USERNAME
+
+  #Insalls file editor nano to the container
+  apt install nano
+
+  #Installs ssh compatibility to the container
+  apt-get install ssh
+
+  #Installs zip/unzip compatibility to the container
+  apt-get install zip/unzip
+
+  #Allows you to edit SSH config file for container
+  nano /etc/ssh/sshd_config
+
+#Starting/Stop/List Containers
+  #Stops all running containers
+  docker stop $(docker ps -aq)
+
+  #Starts all running containers
+  docker start $(docker ps -a -q)
+
+  #Start one specific container
+  Start container: docker start <name>
+
+  #List all containers (running/not-running)
+  docker ps -a
+
+  #List all containers (running)
+  docker ps
+
+#Message of the day (MOTD)
+  #Edit MOTD in SSH config
+  nano /etc/ssh/sshd_config
+
+  #Edit the MOTD
+  nano /etc/motd
+
+  #Remove all pre-set MOTD
+  cd /etc/update-motd.d/
+  rm -a
+
+#Permissions
+  #Add read only
+  chmod +r /home/user
+
+  #Add write only
+  chmod +w /home/user
+
+   #Add execute only
+   chmod +x /home/user
+
+   #Remove all permissions
+   chmod -rwx /home/user
+
+#SSH to container
+ssh USERNAMME@IP-ADDRESS -p PORT
